@@ -22,7 +22,7 @@ def song():
     for i in range(len(list_heroes)):
         int_ver = ''
         int_ver += begining.format(list_heroes[i]) * 2
-        int_ver += "\n".join(list_talks[:i+1])
+        int_ver += "\n".join(list_talks[i::-1])
         final_ver.append(int_ver)
     final_ver.append(ending)
     #print(final_ver)
