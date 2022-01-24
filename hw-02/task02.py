@@ -1,11 +1,10 @@
-from statistics import mean
-
 class Appliance:
     """Класс для описания свойств и методов
     для любого товара из магазина бытовой электроники.
     Свойство acc_price - для накопления цен всех товаров в магазине"""
 
     acc_price = []
+    acc_quantity = []
 
     def __init__(self, name, manufacturer):
         self.name = name
@@ -17,7 +16,8 @@ class Appliance:
         """Метод изменяет количество и цену товара при поступлении"""
         self.quantity += quantity_add
         self.price = price_add
-        Appliance.acc_price.append(self.price)
+        self.__class__.acc_price.append(self.price * self.quantity)
+        self.__class__.acc_quantity.append(self.quantity)
 
     def sell(self, quantity_del):
         """Метод уменьшает количество товара при продаже"""
@@ -90,13 +90,12 @@ shop[2].extended_warranty()
 shop[3].ip_tv()
 
 for item in shop:
-    item.sell(-1)
+    item.sell(1)
 
 for i in shop:
     print(i.__dict__)
 
-# print(Appliance.accumulate())
-print(mean(Appliance.acc_price))
+print("Средняя цена товаров в магазине составляет: ", sum(Appliance.acc_price) / sum(Appliance.acc_quantity))
 
 print(fridge_3 == fridge_2)
 print(fridge_3 == fridge_1)
