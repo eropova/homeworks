@@ -11,7 +11,7 @@ class Skier:
     def go(self, time):
         """Метод для для спуска лыжника"""
         time = Moving.time
-        for _i in range(time):
+        for _ in range(time):
             gals = choice(list(Moving.speed.keys()))
             Moving.distance_pass += Moving.speed[gals]
             Moving.directions.append(gals)
