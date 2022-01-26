@@ -1,6 +1,5 @@
-file = open('input.txt', 'r')
-read = file.readlines()
-file.close()
+with open('input.txt', 'r') as file:
+    read = file.readlines()
 
 new_version = []
 
@@ -11,6 +10,5 @@ for line in read:
 
 new_version = " ".join(new_version)
 
-file = open('input.txt', 'w')
-file.write(new_version)
-file.close()
+with open('input.txt', 'w') as file:
+     file.write(new_version)
