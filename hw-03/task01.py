@@ -14,7 +14,11 @@ class ComplexRootError(Exception):
 
 def solve(a, b, c):
     try:
-        if isinstance(all((a, b, c)), (int, float)):
+        sum_arg = 0
+        for arg in (a, b, c):
+            if isinstance(arg, (int, float)):
+                sum_arg += 1
+        if sum_arg == 3:
             if a != 0:
                 discriminant = b ** 2 - 4 * a * c
                 if discriminant == 0:
