@@ -1,16 +1,20 @@
 class PreconditionError(Exception):
     def __init__(self):
-        pass
+        self.message = f'Исключение: нарушение предусловия a!=0'
 
 
 class ComplexRootError(Exception):
-    def __init__(self):
-        pass
+
+    def __init__(self, a, b, c):
+        self.a = a
+        self.b = b
+        self.c = c
+        self.message = f'Исключение: комплексные корни с аргументами: {self.a} {self.b} {self.c}'
 
 
 def solve(a, b, c):
     try:
-        if not isinstance((a, b, c), (int, float)):
+        if isinstance(all((a, b, c)), (int, float)):
             if a != 0:
                 discriminant = b ** 2 - 4 * a * c
                 if discriminant == 0:
@@ -21,28 +25,26 @@ def solve(a, b, c):
                     x2 = (-b - discriminant ** 0.5) / (2 * a)
                     return ' '.join([str(x) for x in sorted((x1, x2))])
                 else:
-                    raise ComplexRootError
+                    raise ComplexRootError(a, b, c)
             else:
                 raise PreconditionError
-
         else:
             raise TypeError
 
-    except ComplexRootError:
-        return f'Исключение: комплексные корни с аргументами: {a} {b} {c}'
-
-    except PreconditionError:
-        return f'Исключение: нарушение предусловия a!=0'
-
+    except ComplexRootError as cre:
+        return cre.message
+    except PreconditionError as pe:
+        return pe.message
     except TypeError:
         wrong_args = []
-        for _i in (a, b, c):
-            if not isinstance(_i, (int, float)):
-                wrong_args.append((a, b, c).index(_i) + 1)
+        for arg in (a, b, c):
+            if not isinstance(arg, (int, float)):
+                wrong_args.append((a, b, c).index(arg) + 1)
         if len(wrong_args) == 1:
             return f'Исключение: неправильные типы: {wrong_args[0]} аргумент'
         else:
-            return 'Исключение: неправильные типы: ' + ', '.join([str(_i) for _i in wrong_args]) + ' аргументы'
+            return 'Исключение: неправильные типы: ' + ', '.join([str(_) for _ in wrong_args]) + ' аргументы'
+
 
 ins = [(1, 2, 1), (0.25, -2.5, 6), (1, 0, 1), (0, 1, -2), (1j, 2, 3), (1, "2", "3")]
 for i in ins:
